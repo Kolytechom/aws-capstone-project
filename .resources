@@ -1,0 +1,3 @@
+VPC_ID=vpc-0d90de88809b70e20
+WEB_SUBNET_ID=subnet-0ba4beedb1000e24b
+DB_SUBNET_ID=subnet-0390228b1beda8be6

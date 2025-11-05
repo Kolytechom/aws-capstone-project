@@ -1,0 +1,17 @@
+Starting deployment at: Sat, Oct 25, 2025  4:24:02 PM
+Ì¥ß CI/CD PIPELINE FOR AWS IDENTITY & ACCESS CONTROLS
+====================================================
+Starting CI/CD Pipeline for dev environment...
+=== STAGE 1: Environment Validation ===
+‚úÖ Environment: dev
+=== STAGE 2: Pre-deployment Tests ===
+Ì¥ç Validating scripts...
+bash: shellcheck: command not found
+‚ö†Ô∏è  ShellCheck warnings found
+bash: shellcheck: command not found
+‚ö†Ô∏è  ShellCheck warnings found
+Ì¥ç Validating IAM policies...
+‚úÖ All pre-deployment tests passed
+=== STAGE 3: Infrastructure Deployment ===
+Ì∫Ä Deploying to dev environment...
+bash: ./scripts/deploy.sh: No such file or directory
