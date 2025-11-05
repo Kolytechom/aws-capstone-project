@@ -8,9 +8,13 @@ This project automates the setup of secure identity and access controls using AW
 🎯 Project Objectives
 
 · ✅ Create a resource group, virtual network, and two subnets (Web and DB)
+
 · ✅ Create AWS IAM groups: 'WebAdmins' and 'DBAdmins'
+
 · ✅ Assign Reader role to DBAdmins for DB subnet resources
+
 · ✅ Add test users to the AWS groups and validate role assignments
+
 
 🛠 Prerequisites
 
