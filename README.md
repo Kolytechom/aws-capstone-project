@@ -1,39 +1,32 @@
-# [Full README.md content from above]
-CAPSTONE Project: IAM Roles and Secure Access Automation
+# CAPSTONE Project: IAM Roles and Secure Access Automation
 
-📋 Project Overview
+## 📋 Project Overview
 
 This project automates the setup of secure identity and access controls using AWS CLI and Bash scripting. The implementation creates a complete AWS environment with proper IAM roles, network segmentation, and secure access patterns.
 
-🎯 Project Objectives
+## 🎯 Project Objectives
 
-· ✅ Create a resource group, virtual network, and two subnets (Web and DB)
+- ✅ Create a resource group, virtual network, and two subnets (Web and DB)
+- ✅ Create AWS IAM groups: 'WebAdmins' and 'DBAdmins'
+- ✅ Assign Reader role to DBAdmins for DB subnet resources
+- ✅ Add test users to the AWS groups and validate role assignments
 
-· ✅ Create AWS IAM groups: 'WebAdmins' and 'DBAdmins'
+## 🛠 Prerequisites
 
-· ✅ Assign Reader role to DBAdmins for DB subnet resources
+### Required Tools
+- **AWS CLI** installed and configured
+- **Bash shell** environment
+- **AWS Account** with appropriate permissions
+- **Git** for version control
 
-· ✅ Add test users to the AWS groups and validate role assignments
+### AWS Permissions Required
+- IAM Full Access
+- EC2 Full Access
+- Resource Groups Access
 
+## 📁 Project Structure
 
-🛠 Prerequisites
-
-Required Tools
-
-· AWS CLI installed and configured
-· Bash shell environment
-· AWS Account with appropriate permissions
-· Git for version control
-
-AWS Permissions Required
-
-· IAM Full Access
-· EC2 Full Access
-· Resource Groups Access
-
-📁 Project Structure
-
-
+```
 capstone-iam-project/
 ├── capstone-deploy-working.sh     # Main deployment script
 ├── .capstone-resources           # Generated resource IDs
@@ -41,26 +34,26 @@ capstone-iam-project/
 ├── generate-report.sh            # Report generation
 ├── cleanup-project.sh            # Resource cleanup
 └── capstone-deployment-report.txt # Deployment summary
+```
 
+## 🚀 Step-by-Step Deployment Guide
 
-🚀 Step-by-Step Deployment Guide
+### Step 1: Environment Setup
 
-Step 1: Environment Setup
-
-bash
+```bash
 # Clone or create project directory
 mkdir capstone-iam-project
 cd capstone-iam-project
 
 # Verify AWS CLI configuration
 aws sts get-caller-identity
+```
 
-
-Step 2: Create Deployment Script
+### Step 2: Create Deployment Script
 
 Create the main deployment script:
 
-bash
+```bash
 cat > capstone-deploy-working.sh << 'EOF'
 #!/bin/bash
 # [Full script content from previous implementation]
@@ -68,18 +61,17 @@ EOF
 
 # Make script executable
 chmod +x capstone-deploy-working.sh
+```
 
+### Step 3: Execute Deployment
 
-Step 3: Execute Deployment
-
-bash
+```bash
 # Run the deployment script
 ./capstone-deploy-working.sh
+```
 
-
-Expected Output:
-
-
+**Expected Output:**
+```
 🚀 Starting CAPSTONE Project Deployment
 📋 Project: capstone-iam-project
 🌍 Region: us-east-1
@@ -101,13 +93,13 @@ Expected Output:
 🎉 All essential validations passed!
 
 🎉 CAPSTONE PROJECT DEPLOYED SUCCESSFULLY!
+```
 
-
-Step 4: Validate Deployment
+### Step 4: Validate Deployment
 
 Create and run the validation script:
 
-bash
+```bash
 cat > validate-roles.sh << 'EOF'
 #!/bin/bash
 # [Full validation script content]
@@ -115,11 +107,11 @@ EOF
 
 chmod +x validate-roles.sh
 ./validate-roles.sh
+```
 
+### Step 5: Generate Deployment Report
 
-Step 5: Generate Deployment Report
-
-bash
+```bash
 cat > generate-report.sh << 'EOF'
 #!/bin/bash
 # [Full report script content]
@@ -127,21 +119,21 @@ EOF
 
 chmod +x generate-report.sh
 ./generate-report.sh
+```
 
+## 🔍 Verification Steps
 
-🔍 Verification Steps
+### 1. Verify Network Resources
 
-1. Verify Network Resources
-
-bash
+```bash
 # Check VPC and subnets
 aws ec2 describe-vpcs --vpc-ids $(grep VPC_ID .capstone-resources | cut -d'=' -f2)
 aws ec2 describe-subnets --filters "Name=vpc-id,Values=$(grep VPC_ID .capstone-resources | cut -d'=' -f2)"
+```
 
+### 2. Verify IAM Configuration
 
-2. Verify IAM Configuration
-
-bash
+```bash
 # Check IAM groups
 aws iam list-groups
 
@@ -152,30 +144,28 @@ aws iam get-group --group-name "DBAdmins"
 # Check attached policies
 aws iam list-attached-group-policies --group-name "WebAdmins"
 aws iam list-attached-group-policies --group-name "DBAdmins"
+```
 
+### 3. Verify Policy Details
 
-3. Verify Policy Details
-
-bash
+```bash
 # Check DBAdmins read-only policy
 DB_POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='DBAdmins-ReadOnly'].Arn" --output text)
 aws iam get-policy --policy-arn "$DB_POLICY_ARN"
 aws iam get-policy-version --policy-arn "$DB_POLICY_ARN" --version-id v1
+```
 
+## 📊 Resource Architecture
 
-📊 Resource Architecture
-
-Network Infrastructure
-
-
+### Network Infrastructure
+```
 VPC (10.0.0.0/16)
 ├── Web Subnet (10.0.1.0/24) - us-east-1a
 └── DB Subnet (10.0.2.0/24) - us-east-1b
+```
 
-
-IAM Security Model
-
-
+### IAM Security Model
+```
 IAM Structure
 ├── WebAdmins Group
 │   ├── AmazonEC2FullAccess policy
@@ -184,13 +174,12 @@ IAM Structure
     ├── DBAdmins-ReadOnly policy (custom)
     ├── ReadOnlyAccess policy (AWS managed)
     └── db-admin1 user
+```
 
+### Security Policies Details
 
-Security Policies Details
-
-DBAdmins-ReadOnly Policy:
-
-json
+**DBAdmins-ReadOnly Policy:**
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -207,13 +196,13 @@ json
         }
     ]
 }
+```
 
-
-🧹 Cleanup Procedure
+## 🧹 Cleanup Procedure
 
 When the project demonstration is complete, clean up all resources:
 
-bash
+```bash
 cat > cleanup-project.sh << 'EOF'
 #!/bin/bash
 # [Full cleanup script content]
@@ -221,10 +210,9 @@ EOF
 
 chmod +x cleanup-project.sh
 ./cleanup-project.sh
+```
 
-
-Cleanup Process:
-
+**Cleanup Process:**
 1. Remove IAM users from groups
 2. Delete IAM users
 3. Detach and delete custom policies
@@ -232,132 +220,124 @@ Cleanup Process:
 5. Delete network resources (subnets, VPC)
 6. Remove local configuration files
 
-📸 Deliverables Checklist
+## 📸 Deliverables Checklist
 
-Required Screenshots
+### Required Screenshots
+- [ ] **Terminal Output**: Successful deployment script execution
+- [ ] **AWS VPC Console**: Showing created VPC and subnets
+- [ ] **AWS IAM Console**: Showing groups and users
+- [ ] **IAM Policies**: Showing custom DBAdmins-ReadOnly policy
+- [ ] **Validation Output**: Proof of role assignments working
 
-· Terminal Output: Successful deployment script execution
-· AWS VPC Console: Showing created VPC and subnets
-· AWS IAM Console: Showing groups and users
-· IAM Policies: Showing custom DBAdmins-ReadOnly policy
-· Validation Output: Proof of role assignments working
+### Generated Artifacts
+- [ ] Deployment script (`capstone-deploy-working.sh`)
+- [ ] Resource tracking file (`.capstone-resources`)
+- [ ] Validation script output
+- [ ] Deployment report (`capstone-deployment-report.txt`)
 
-Generated Artifacts
+## 🔧 Troubleshooting Guide
 
-· Deployment script (capstone-deploy-working.sh)
-· Resource tracking file (.capstone-resources)
-· Validation script output
-· Deployment report (capstone-deployment-report.txt)
+### Common Issues and Solutions
 
-🔧 Troubleshooting Guide
-
-Common Issues and Solutions
-
-Issue: AWS CLI not configured
-
-bash
+**Issue: AWS CLI not configured**
+```bash
 # Solution: Configure AWS credentials
 aws configure
+```
 
-
-Issue: Permission denied errors
-
-bash
+**Issue: Permission denied errors**
+```bash
 # Solution: Check and update IAM permissions in AWS console
 # Required: IAMFullAccess, EC2FullAccess
+```
 
-
-Issue: Resource already exists
-
-bash
+**Issue: Resource already exists**
+```bash
 # Solution: The script handles existing resources gracefully
 # Run cleanup script if you want to start fresh
 ./cleanup-project.sh
+```
 
-
-Issue: JSON parsing errors
-
-bash
+**Issue: JSON parsing errors**
+```bash
 # Solution: Ensure proper JSON formatting in scripts
 # The final version avoids complex JSON parsing
+```
 
+### Debugging Steps
 
-Debugging Steps
-
-1. Check AWS Configuration
-   bash
+1. **Check AWS Configuration**
+   ```bash
    aws sts get-caller-identity
-   
-2. Verify Script Permissions
-   bash
+   ```
+
+2. **Verify Script Permissions**
+   ```bash
    chmod +x *.sh
-   
-3. Run with Debug Output
-   bash
+   ```
+
+3. **Run with Debug Output**
+   ```bash
    bash -x ./capstone-deploy-working.sh
-   
-4. Check Resource Creation
-   bash
+   ```
+
+4. **Check Resource Creation**
+   ```bash
    aws ec2 describe-vpcs
    aws iam list-groups
-   
+   ```
 
-📈 Project Validation
+## 📈 Project Validation
 
-Success Criteria
+### Success Criteria
+- ✅ VPC with two subnets created and tagged
+- ✅ IAM groups (WebAdmins, DBAdmins) created
+- ✅ Custom read-only policy for DBAdmins implemented
+- ✅ Test users created and assigned to correct groups
+- ✅ Role-based access control validated
+- ✅ All resources properly tagged for management
 
-· ✅ VPC with two subnets created and tagged
-· ✅ IAM groups (WebAdmins, DBAdmins) created
-· ✅ Custom read-only policy for DBAdmins implemented
-· ✅ Test users created and assigned to correct groups
-· ✅ Role-based access control validated
-· ✅ All resources properly tagged for management
-
-Validation Commands
-
-bash
+### Validation Commands
+```bash
 # Comprehensive validation
 ./validate-roles.sh
 
 # Quick check
 aws iam get-group --group-name "DBAdmins"
 aws ec2 describe-subnets --filters "Name=tag:Project,Values=Capstone"
+```
 
+## 🎓 Learning Outcomes
 
-🎓 Learning Outcomes
+### Technical Skills Demonstrated
+- AWS IAM group and policy management
+- VPC and subnet configuration
+- Bash scripting for AWS automation
+- JSON policy document creation
+- AWS CLI proficiency
+- Resource tagging and organization
 
-Technical Skills Demonstrated
+### Security Best Practices Implemented
+- Principle of least privilege
+- Role-based access control (RBAC)
+- Resource segmentation
+- Automated security controls
+- Audit trail through resource tagging
 
-· AWS IAM group and policy management
-· VPC and subnet configuration
-· Bash scripting for AWS automation
-· JSON policy document creation
-· AWS CLI proficiency
-· Resource tagging and organization
-
-Security Best Practices Implemented
-
-· Principle of least privilege
-· Role-based access control (RBAC)
-· Resource segmentation
-· Automated security controls
-· Audit trail through resource tagging
-
-📞 Support
+## 📞 Support
 
 For issues with this deployment:
-
 1. Check the troubleshooting section above
 2. Verify AWS region and service limits
 3. Ensure IAM permissions are sufficient
 4. Check AWS CloudTrail for API errors
 
-📄 License
+## 📄 License
 
 This project is for educational purposes as part of AWS CAPSTONE project requirements.
 
 ---
 
-Project Completed Successfully! 🎉
+**Project Completed Successfully!** 🎉
 
-All CAPSTONE project requirements have been implemented and validated. The automated deployment creates a secure AWS environment with proper IAM roles, network segmentation, and access controls following AWS best practices.
+All CAPSTONE project requirements have been implemented and validated. The automated deployment creates a secure AWS environment with proper IAM roles, network segmentation, and access controls following AWS best practices.
