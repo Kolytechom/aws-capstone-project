@@ -1,4 +1,4 @@
-name: Deploy Capstone IAM Project
+  name: Deploy Capstone IAM Project
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
         echo "✅ Deployment completed successfully"
 
     - name: Upload deployment artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deployment-results
         path: |
