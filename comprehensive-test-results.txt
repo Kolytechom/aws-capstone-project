@@ -1,0 +1,60 @@
+Ì∫Ä CAPSTONE PROJECT COMPREHENSIVE TEST SUITE
+============================================
+Starting all validation tests...
+
+[0;34m[MASTER] 1. RUNNING WEBADMIN ACCESS TESTS[0m
+Ì¥ê WEBADMIN ACCESS VALIDATION TEST
+==================================
+
+1. Checking WebAdmin user existence...
+‚úÖ web-admin1 user exists
+
+2. Checking WebAdmin group membership...
+‚úÖ web-admin1 is member of WebAdmins group
+
+3. Checking EC2 Full Access Policy...
+‚úÖ AmazonEC2FullAccess policy attached to WebAdmins
+
+4. Testing EC2 Describe Instances permission...
+‚úÖ WebAdmin can describe EC2 instances
+
+Ìæâ WEBADMIN ACCESS VALIDATION COMPLETED SUCCESSFULLY!
+[0;32m‚úÖ WebAdmin tests passed[0m
+
+[0;34m[MASTER] 2. RUNNING DBADMIN ACCESS TESTS[0m
+Ì¥ê DBADMIN READ-ONLY ACCESS VALIDATION TEST
+===========================================
+
+1. Checking DBAdmin user existence...
+‚úÖ db-admin1 user exists
+
+2. Checking DBAdmin group membership...
+‚úÖ db-admin1 is member of DBAdmins group
+
+3. Checking Custom Read-Only Policy...
+‚úÖ DBAdmins-ReadOnly policy attached
+
+4. Testing Read-Only Actions (should work)...
+‚úÖ DBAdmin can describe subnets
+
+5. Testing Write Actions (should fail)...
+‚úÖ DBAdmin cannot run instances (as expected)
+
+Ìæâ DBADMIN READ-ONLY ACCESS VALIDATION COMPLETED SUCCESSFULLY!
+[0;32m‚úÖ DBAdmin tests passed[0m
+
+[0;34m[MASTER] 3. RUNNING NETWORK SEGMENTATION TESTS[0m
+Ìºê NETWORK SEGMENTATION VALIDATION TEST
+======================================
+‚úÖ Loaded resource IDs from .capstone-resources
+
+1. Checking VPC Configuration...
+‚úÖ VPC CIDR block: 10.0.0.0/16
+
+2. Checking Subnet Configuration...
+‚úÖ Web Subnet CIDR: 10.0.1.0/24
+‚úÖ DB Subnet CIDR: 10.0.2.0/24
+
+3. Checking Subnet Tags...
+‚ùå Web Subnet tag incorrect: 
+[0;31m‚ùå Network segmentation tests failed[0m
