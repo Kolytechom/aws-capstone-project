@@ -1,4 +1,4 @@
-name: Test Capstone CI
+name: Test Capstone Project
 
 on:
   workflow_dispatch:
@@ -7,11 +7,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: List files
-        run: ls -la
-
-      - name: Success message
-        run: echo "✅ Workflow is working!"
+      - uses: actions/checkout@v3
+      - run: echo "Hello World - GitHub Actions is working!"
