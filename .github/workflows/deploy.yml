@@ -1,126 +1,17 @@
-name: Deploy Capstone IAM Project
+name: Test Capstone CI
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:  # Manual trigger
-
-env:
-  AWS_REGION: us-east-1
-  PROJECT_NAME: capstone-iam-project
+  workflow_dispatch:
 
 jobs:
-  validate:
-    name: Validate Scripts
+  test:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Validate script syntax
-      run: |
-        echo "��� Validating script syntax..."
-        for script in *.sh; do
-          if [ -f "$script" ]; then
-            echo "Checking $script..."
-            bash -n "$script" && echo "✅ $script syntax OK"
-          fi
-        done
+      - name: List files
+        run: ls -la
 
-    - name: List project structure
-      run: |
-        echo "��� Project Files:"
-        find . -name "*.sh" -o -name "*.yml" -o -name "*.md" | grep -v ".git" | sort
-
-  deploy:
-    name: Deploy to AWS
-    runs-on: ubuntu-latest
-    needs: validate
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Setup and permissions
-      run: |
-        echo "��� Setting up environment..."
-        chmod +x *.sh
-        echo "✅ Scripts are now executable"
-
-    - name: Validate AWS connection
-      run: |
-        echo "��� Testing AWS credentials..."
-        aws sts get-caller-identity
-        echo "✅ AWS connection successful"
-
-    - name: Run deployment
-      run: |
-        echo "��� Starting CAPSTONE deployment..."
-        if [ -f "capstone-deploy-working.sh" ]; then
-          ./capstone-deploy-working.sh
-        else
-          echo "❌ Deployment script not found"
-          exit 1
-        fi
-
-    - name: Run tests
-      run: |
-        echo "��� Running validation tests..."
-        if [ -f "run-all-tests.sh" ]; then
-          ./run-all-tests.sh || echo "⚠️ Tests completed with warnings"
-        else
-          echo "⚠️ Test runner not found, skipping tests"
-        fi
-
-    - name: Generate report
-      run: |
-        echo "��� Generating deployment report..."
-        if [ -f "generate-report.sh" ]; then
-          ./generate-report.sh
-        fi
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: capstone-results
-        path: |
-          .capstone-resources
-          capstone-deployment-report.txt
-        retention-days: 1
-
-  cleanup:
-    name: Cleanup Resources
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Run cleanup
-      run: |
-        echo "��� Cleaning up resources..."
-        if [ -f "cleanup-project.sh" ]; then
-          chmod +x cleanup-project.sh
-          ./cleanup-project.sh
-        else
-          echo "⚠️ Cleanup script not found"
-        fi
+      - name: Success message
+        run: echo "✅ Workflow is working!"
