@@ -22,7 +22,7 @@ jobs:
 
     - name: Validate script syntax
       run: |
-        echo "Ì¥ç Validating script syntax..."
+        echo "ÔøΩÔøΩÔøΩ Validating script syntax..."
         for script in *.sh; do
           if [ -f "$script" ]; then
             echo "Checking $script..."
@@ -32,7 +32,7 @@ jobs:
 
     - name: List project structure
       run: |
-        echo "Ì≥Å Project Files:"
+        echo "ÔøΩÔøΩÔøΩ Project Files:"
         find . -name "*.sh" -o -name "*.yml" -o -name "*.md" | grep -v ".git" | sort
 
   deploy:
@@ -54,19 +54,19 @@ jobs:
 
     - name: Setup and permissions
       run: |
-        echo "Ì¥ß Setting up environment..."
+        echo "ÔøΩÔøΩÔøΩ Setting up environment..."
         chmod +x *.sh
         echo "‚úÖ Scripts are now executable"
 
     - name: Validate AWS connection
       run: |
-        echo "Ì¥ê Testing AWS credentials..."
+        echo "ÔøΩÔøΩÔøΩ Testing AWS credentials..."
         aws sts get-caller-identity
         echo "‚úÖ AWS connection successful"
 
     - name: Run deployment
       run: |
-        echo "Ì∫Ä Starting CAPSTONE deployment..."
+        echo "ÔøΩÔøΩÔøΩ Starting CAPSTONE deployment..."
         if [ -f "capstone-deploy-working.sh" ]; then
           ./capstone-deploy-working.sh
         else
@@ -76,7 +76,7 @@ jobs:
 
     - name: Run tests
       run: |
-        echo "Ì∑™ Running validation tests..."
+        echo "ÔøΩÔøΩÔøΩ Running validation tests..."
         if [ -f "run-all-tests.sh" ]; then
           ./run-all-tests.sh || echo "‚ö†Ô∏è Tests completed with warnings"
         else
@@ -85,13 +85,13 @@ jobs:
 
     - name: Generate report
       run: |
-        echo "Ì≥ä Generating deployment report..."
+        echo "ÔøΩÔøΩÔøΩ Generating deployment report..."
         if [ -f "generate-report.sh" ]; then
           ./generate-report.sh
         fi
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: capstone-results
         path: |
@@ -117,7 +117,7 @@ jobs:
 
     - name: Run cleanup
       run: |
-        echo "Ì∑π Cleaning up resources..."
+        echo "ÔøΩÔøΩÔøΩ Cleaning up resources..."
         if [ -f "cleanup-project.sh" ]; then
           chmod +x cleanup-project.sh
           ./cleanup-project.sh
