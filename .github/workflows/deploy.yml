@@ -1,11 +1,33 @@
-name: Test Capstone Project
+name: Deploy Capstone IAM Project
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:    # Allows manual trigger
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - run: echo "Hello World - GitHub Actions is working!"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install AWS CLI (if needed)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Make deploy script executable
+        run: chmod +x deploy.sh
+
+      - name: Run Deployment Script
+        run: ./deploy.sh 
