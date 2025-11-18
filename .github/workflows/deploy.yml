@@ -30,4 +30,4 @@ jobs:
         run: chmod +x capstome-deploy-working.sh
 
       - name: Run Deployment Script
-        run: sudo ./capstome-deploy-working.sh 
+        run: sudo bash capstome-deploy-working.sh
