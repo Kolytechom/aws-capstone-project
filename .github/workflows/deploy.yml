@@ -23,8 +23,11 @@ jobs:
 
       - name: Install AWS CLI (if needed)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          sudo apt-get install -y unzip
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
 
       - name: Make deploy script executable
         run: chmod +x capstone-deploy-working.sh
