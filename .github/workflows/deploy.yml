@@ -21,14 +21,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Install AWS CLI (if needed)
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          sudo apt-get install -y unzip
-          unzip awscliv2.zip
-          sudo ./aws/install
-          aws --version
-
       - name: Make deploy script executable
         run: chmod +x capstone-deploy-working.sh
 
